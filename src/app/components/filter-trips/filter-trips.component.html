@@ -1,0 +1,47 @@
+
+<h5>Kraje</h5>
+<form [formGroup]="formGroup" (ngSubmit)="update()">
+<ul>
+  <li *ngFor="let country of countries_obj;index as i">
+    <mat-checkbox formControlName="check" value="country.name" name="country" (ngModelChange)="updateCountry(i)">{{country.name}}</mat-checkbox>
+  </li>
+</ul>
+<h5>Zakres cen</h5>
+<div class="range">
+  <mat-form-field apperance="fill" class="form-element">
+    <mat-label for="low">min</mat-label>
+    <input matInput  id="low" type="number" formControlName="low">
+  </mat-form-field>
+  <mat-form-field apperance="fill" class="form-element">
+    <mat-label for="high">max</mat-label>
+    <input matInput  id="high" type="number" formControlName="high">
+  </mat-form-field>
+</div>
+<h5>Zakres dat</h5>
+<p><mat-form-field apperance="fill" class="form-element">
+  <mat-label for="dateBegin">Data wyjazdu</mat-label>
+  <mat-date-range-input [rangePicker]="picker">
+
+    <input matStartDate id="dateFrom"  placeholder="mm.dd.rrrr" formControlName="dateFrom">
+
+    <input matEndDate  id="dateTo" placeholder="mm.dd.rrrr" formControlName="dateTo">
+
+  </mat-date-range-input>
+        <mat-datepicker-toggle matIconSuffix [for]="picker">
+  </mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+
+</mat-form-field>
+</p>
+<h5>Ocena</h5>
+<ul class="ratingul">
+  <li><input type="radio" name="rating" formControlName="rating" value="0"><div class="ratin1"></div></li>
+  <li><input type="radio" name="rating" formControlName="rating" value="1"><div class="ratin2"></div></li>
+  <li><input type="radio" name="rating" formControlName="rating" value="2"><div class="ratin3"></div></li>
+  <li><input type="radio" name="rating" formControlName="rating" value="3"><div class="ratin4"></div></li>
+  <li><input type="radio" name="rating" formControlName="rating" value="4"><div class="ratin5"></div></li>
+</ul>
+<button mat-raised-button type="submit"> Zatwierdź</button>
+<button mat-button type="button" (click)="reset()">Reset</button>
+<!-- {{formGroup.value | json}} -->
+</form>

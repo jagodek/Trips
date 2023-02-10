@@ -1,0 +1,15 @@
+
+<div class="main-container">
+  <aside *ngIf="loaded">
+    <app-filter-trips (filterSet)="applyFilter($event)" ></app-filter-trips>
+  </aside>
+
+  <div  class="container">
+    <div *ngIf="cheap!=0" class="inner">
+      <div class="enum" *ngFor="let trip of trips | FilterPipe:filterSet">
+        <app-trip-tile [cheap]="trip.price === cheap" [expensive]="trip.price === expensive" [trip]="trip" (delete)="onDelete($event)" ></app-trip-tile>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  -->

@@ -1,0 +1,36 @@
+li
+  list-style: none
+
+input[type=number]
+  -moz-appearance: textfield
+  input::-webkit-outer-spin-button,input::-webkit-inner-spin-button
+    -webkit-appearance: none
+    margin: 0
+
+h5
+  margin-top: 15px
+  margin-bottom: 10px
+
+.range
+  display: flex
+
+.ratingul
+  li
+    display: flex
+    gap: 20px
+    margin-bottom: 15px
+
+@for $n from 1 through 5
+  .ratin#{$n}
+    width: 9em
+    height: 30px
+    -webkit-mask-image: url(/assets/images/stars.png)
+    mask-image: url(/assets/images/stars.png)
+    -webkit-mask-repeat: no-repeat
+    mask-repeat: no-repeat
+    mask-size: 9em auto
+    -webkit-mask-size: 9em auto
+    background: linear-gradient(to right, #ff0,#ff0 calc(($n) * 20%),#555 calc(($n) * 20%), #555)
+
+@media screen and (max-width: 420px)
+  

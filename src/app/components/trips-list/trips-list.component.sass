@@ -1,0 +1,32 @@
+$asideWidth: 300px
+
+.main-container
+  display: flex
+  aside
+    background-color: #fff
+    width: $asideWidth
+    padding: 20px
+    align-self: flex-start
+  .container
+    width: calc( 100vw - $asideWidth )
+    padding-top: 20px
+    .inner
+      width: calc( 100% - 40px )
+      margin-left: auto
+      margin-right: auto
+      .enum
+        app-trip-tile
+          display: flex
+          align-items: center
+          flex-direction: column
+          justify-content: center
+
+
+@media screen and (max-width:740px)
+  .main-container
+    flex-direction: column
+    aside
+      width: 100vw
+    .container
+      width: 100vw
+

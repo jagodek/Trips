@@ -1,0 +1,55 @@
+
+
+<mat-card class="container" [ngClass]="{'cheap': cheap, 'expensive': expensive  }" *ngIf="trip">
+
+  <div class="left"><a routerLink="details/{{trip.id}}"><img src="{{trip.photos[0]}}" alt=""></a></div>
+  <div class="center">
+    <a routerLink="details/{{trip.id}}"><h1>{{trip.name | uppercase}}</h1></a>
+    <!-- <input type="radio" (change)="rating(2)"  name="star" value="2">
+      <input type="radio" (change)="rating(3)"  name="star" value="3">
+      <input type="radio" (change)="rating(4)"  name="star" value="4">
+      <input type="radio" (change)="rating(5)"  name="star" value="5"> -->
+      <div class="rating" [className]="'rating-'+trip.stars">
+        <!-- <div class="radio" *ngFor="let x of numbers">
+          <label for="s{{x}}{{trip.id}}"></label>
+          <input type="radio" (change)="rating(x)" id="s{{x}}{{trip.id}}" name="star" value="x">
+        </div> -->
+    </div>
+    <ul>
+      <li>Kraj: {{trip.country | uppercase}}</li>
+      <li><span>Data wyjazdu:</span> {{trip.dateBegin}}</li>
+      <li><span>Data powrotu: </span>{{trip.dateEnd}}</li>
+      <li class="description"><span>Opis: </span>{{trip.description | truncate:300:true}}
+        <a class="readmore" a routerLink="details/{{trip.id}}">Czytaj dalej</a>
+      </li>
+    </ul>
+  </div>
+  <div class="right" [ngStyle]="{'background-color': colors[min(trip.freeSlots-reserved,3)]}">
+    <h3>{{trip.price | currency:"PLN":"symbol":"4.0-0":"pl"}}</h3>
+    <p>Zarezerwuj miejsca</p>
+    <div class="buttons">
+      <div><button (click)="increment()" [hidden]="trip.freeSlots === reserved" mat-fab color="primary"
+          aria-label="Example icon button with a home icon">
+          <mat-icon>exposure_plus_1</mat-icon>
+        </button></div>
+      <div><button (click)="decrement()" [hidden]="0 === reserved" mat-fab color="accent"
+          aria-label="Example icon button with a home icon">
+          <mat-icon>exposure_neg_1</mat-icon>
+        </button></div>
+    </div>
+    <div *ngIf="trip.freeSlots === 0 && reserved === 0">
+      <p class="noSpaces">brak wolnych miejsc</p>
+    </div>
+    <div *ngIf="isLogged && (trip.freeSlots != 0 || reserved != 0)">
+      <p class="res">Zarezerwowane przez ciebie: {{reserved}}/{{trip.freeSlots}}</p>
+    </div>
+    <br>
+    <button *ngIf="isLogged && (userObject.role === 'admin' || userObject.role === 'manager')" (click)="deleteAction()" class="buttonDelete" mat-mini-fab color="warn" aria-label="Example icon button with a filter list icon">
+      <mat-icon>restore_from_trash</mat-icon>
+    </button>
+
+  </div>
+
+
+
+</mat-card>

@@ -1,0 +1,23 @@
+.maincontainer
+  display: flex
+  flex-direction: column
+  .form-box
+    padding: 5em
+    display: inline-block
+    background-color: #ddd
+    form
+      position: relative
+      width: 20em
+      p
+        mat-form-field
+          width: 100%
+        input[type=number]
+          -moz-appearance: textfield
+        input::-webkit-outer-spin-button,input::-webkit-inner-spin-button
+          -webkit-appearance: none
+          margin: 0
+  .edit
+    display: flex
+    gap:20px
+
+

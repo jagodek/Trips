@@ -1,0 +1,45 @@
+
+
+<form [formGroup]="formGroup" (ngSubmit)="submit()">
+  <h1>Zaloguj</h1>
+  <p>
+    <mat-form-field apperance="fill" class="form-element">
+      <mat-label>email</mat-label>
+      <input matInput id="email" formControlName="email">
+
+      <mat-error *ngIf="formGroup.get('email')?.hasError('email') && !formGroup.get('email')?.hasError('required')">
+        Proszę podać prawidłowy email
+      </mat-error>
+      <mat-error *ngIf="formGroup.get('email')?.hasError('required')">
+        Email jest <strong>wymagany</strong>
+      </mat-error>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field apperance="fill" class="form-element">
+      <mat-label>password</mat-label>
+      <input matInput  [type]="hide ? 'password' : 'text'" id="password" formControlName="password">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" type="button">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="formGroup.get('password')?.hasError('minlength')">
+        Hasło musi mieć co najmniej 6 znaków
+      </mat-error>
+      <mat-error *ngIf="formGroup.get('email')?.hasError('required')">
+        Hasło jest <strong>wymagane</strong>
+      </mat-error>
+    </mat-form-field>
+  </p>
+  <button mat-button type="submit" [disabled]="!formGroup.valid">Submit</button>
+  <br>
+  <br>
+  <p>Nie masz konta? <a routerLink="../signup">Zarejestruj się</a></p>
+  <br>
+  <br>
+
+  <!-- <p>Dane kont testowych</p>
+  <button type="button" (click)="client()">client</button>
+  <button type="button" (click)="manager()">manager</button>
+  <button type="button" (click)="admin()">admin</button> -->
+</form>
+

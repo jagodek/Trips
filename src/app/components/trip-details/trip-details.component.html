@@ -1,0 +1,103 @@
+<mat-card class="container" *ngIf="trip">
+
+  <div class="left">
+    <div class="top">
+      <div class="image">
+        <img src="{{trip.photos[current_photo]}}" alt="">
+      </div>
+      <div class="grid">
+        <div class="grid-image" *ngFor="let image of trip.photos, let i =index">
+          <img src="{{image}}" (click)="change_photo(i)" alt="">
+        </div>
+      </div>
+
+
+    </div>
+    <div class="down">
+      <div class="center">
+        <h1>{{trip.name | uppercase}}</h1>
+        <div class="rating" [className]="'rating-'+trip.stars">
+        </div>
+        <ul>
+          <li>Kraj: {{trip.country | uppercase}}</li>
+          <li><span>Data wyjazdu:</span> {{trip.dateBegin}}</li>
+          <li><span>Data powrotu: </span>{{trip.dateEnd}}</li>
+          <li class="description"><span>Opis: </span>{{trip.description}}</li>
+        </ul>
+      </div>
+
+
+    </div>
+
+
+
+  </div>
+  <div class="right" [ngStyle]="{'background-color': colors[min(trip.freeSlots-reserved,3)]}">
+    <h3>{{trip.price | currency:"PLN":"symbol":"4.0-0":"pl"}}</h3>
+    <p>Zarezerwuj miejsca</p>
+    <div class="buttons">
+      <div><button (click)="increment()" [hidden]="trip.freeSlots === reserved" mat-fab color="primary">
+          <mat-icon>exposure_plus_1</mat-icon>
+        </button></div>
+      <div><button (click)="decrement()" [hidden]="0 === reserved" mat-fab color="accent">
+          <mat-icon>exposure_neg_1</mat-icon>
+        </button></div>
+    </div>
+    <div *ngIf="trip.freeSlots === 0 && reserved === 0">
+      <p class="noSpaces">brak wolnych miejsc</p>
+    </div>
+    <div *ngIf="trip.freeSlots != 0 || reserved != 0">
+      <p class="res">Zarezerwowane przez ciebie: {{reserved}}/{{trip.freeSlots}}</p>
+    </div>
+    <br>
+
+
+    <form (ngSubmit)="onSubmit(myForm)" #myForm="ngForm">
+      <h2><span *ngIf="!banned && userObject.role != 'manager'">Twoja opinia</span><span *ngIf="banned || userObject.role === 'manager'">Nie masz możliwość komentowania wycieczki</span></h2>
+      <div class="rating" [className]="'rating-'+stars">
+        <div class="radio" *ngFor="let x of numbers">
+          <label for="s{{x}}{{trip.id}}"></label>
+
+          <input type="radio" (change)="rating(x)" id="s{{x}}{{trip.id}}" name="stars" [value]="x" [(ngModel)]="stars" required>
+
+        </div>
+      </div>
+      <mat-form-field apperance="fill" class="form-element">
+        <mat-label>opinia</mat-label>
+
+        <textarea matInput id="opinion" name="comment" [(ngModel)]="comment" required minlength="50" maxlength="500"></textarea>
+
+      </mat-form-field>
+      <!-- [disabled]="!addForm.valid" -->
+      <div><button mat-button type="submit"  [disabled]="!myForm.valid || banned || userObject.role === 'manager'" >Submit</button></div>
+    </form>
+
+    <h2>opinie innych</h2>
+    <div class="commentContainer">
+      <div class="comment" *ngFor="let opinion of trip.reviews">
+        <div class="head">
+          <b>{{opinion.user}}</b>
+          <div class="userRating" [className]="'userRating-'+opinion.stars">
+          </div>
+        </div>
+        <div class="commentText">
+          <p>{{opinion.comment}}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- <button (click)="deleteAction()" class="buttonDelete" mat-mini-fab color="warn"
+      aria-label="Example icon button with a filter list icon">
+      <mat-icon>restore_from_trash</mat-icon>
+    </button> -->
+
+  </div>
+
+
+
+</mat-card>
+
+
+
+
+

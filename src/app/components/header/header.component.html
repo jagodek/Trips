@@ -1,0 +1,24 @@
+<header>
+  <div class="left">
+    <div class="title">
+      <h1>localhost travel</h1>
+    </div>
+    <nav class="nav">
+      <a mat-button routerLink="" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+      <a mat-button routerLink="offer" routerLinkActive="active" ariaCurrentWhenActive="page">Oferta wycieczek</a>
+      <a *ngIf="isLogged && (userObject.role === 'admin' || userObject.role === 'manager')" mat-button routerLink="manage" routerLinkActive="active" ariaCurrentWhenActive="page">Zarządzaj wycieczkami</a>
+      <a *ngIf="isLogged && userObject.role === 'admin'" mat-button routerLink="admin-panel" routerLinkActive="active" ariaCurrentWhenActive="page">Panel admina</a>
+      <!-- <a mat-button (click)="reset()">Reset database</a> -->
+
+    </nav>
+
+  </div>
+  <div class="right">
+    <div *ngIf="isLogged && userObject.role != 'admin'" class="name">{{userObject.name}}</div>
+    <div *ngIf="isLogged && userObject.role === 'admin'" class="name">ADMIN</div>
+    <a *ngIf="!isLogged" mat-button class="auth" id="si" routerLink="signin" routerLinkActive="active" ariaCurrentWhenActive="page">Zaloguj</a>
+    <a *ngIf="!isLogged" mat-button class="auth" id="su" routerLink="signup" routerLinkActive="active" ariaCurrentWhenActive="page">Zarejestruj</a>
+    <button *ngIf="isLogged" mat-button class="auth" id="so" (click)="signOut()" ariaCurrentWhenActive="page">Wyloguj</button>
+    <a id="cart" routerLink="cart" routerLinkActive="active" ariaCurrentWhenActive="page"><mat-icon [inline]="true">shopping_cart</mat-icon></a>
+  </div>
+</header>

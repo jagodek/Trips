@@ -1,0 +1,58 @@
+<div class="area">
+  <div class="left-area">
+      <h2>Twój koszyk <span *ngIf="trips.length === 0">jest pusty</span></h2>
+      <br>
+      <div *ngFor="let trip of trips, index as i">
+        <div class="tripTile" *ngIf="userTrips.length > i && userTrips[i].state === 'reserved'">
+          <div class="left"><a routerLink="/offer/details/{{trip.id}}"><img src="{{trip.photos[0]}}" alt=""></a></div>
+          <div class="center">
+            <a routerLink="/offer/details/{{trip.id}}"><h1>{{trip.name | uppercase}}</h1></a>
+            <ul>
+              <li>Kraj: {{trip.country | uppercase}}</li>
+            </ul>
+          </div>
+          <div class="right">
+          <p>Ilość zamówionych miejsc:  {{userTrips[i].noPlaces}} </p>
+          <div class="buttons">
+            <div><button (click)="increment(i)" [hidden]="userTrips[i].noPlaces === trip.maxPeople - trip.people " mat-fab color="primary"
+                aria-label="Example icon button with a home icon">
+                <mat-icon>exposure_plus_1</mat-icon>
+              </button></div>
+            <div><button (click)="decrement(i)" mat-fab color="accent"
+                aria-label="Example icon button with a home icon">
+                <mat-icon>exposure_neg_1</mat-icon>
+              </button></div>
+              <button mat-button class="buyOne" (click)="buyOne(i)">Zakup tą wycieczkę</button>
+          </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="cartContainer" >
+        <h2>Zakupione wycieczki</h2>
+        <br>
+        <div *ngFor="let trip of trips, index as i">
+
+
+        <div class="tripTile" *ngIf="userTrips.length > i && userTrips[i].state === 'bought'">
+          <div class="left"><a routerLink="/offer/details/{{trip.id}}"><img src="{{trip.photos[0]}}" alt=""></a></div>
+          <div class="center">
+            <a routerLink="/offer/details/{{trip.id}}"><h1>{{trip.name | uppercase}}</h1></a>
+            <ul>
+              <li>Kraj: {{trip.country | uppercase}}</li>
+            </ul>
+          </div>
+          <div class="right">
+           <p>Ilość zamówionych miejsc: {{userTrips[i].noPlaces}} </p>
+          </div>
+        </div>
+      </div>
+      </div>
+  </div>
+
+
+  <div class="rightArea">
+    <button mat-button [disabled]="trips.length === 0" (click)="buyAll()">Zakup wszystkie</button>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+// zielona własna ocena a nie zmiana żółtej
+
+,
+
+  {
+    "name":"",
+    "country":"",
+    "dateBegin":"",
+    "dateEnd":"",
+    "price":,
+    "maxPeople":,
+    "people":,
+    "description":"",
+    "photo":"",
+    "reviews":[
+      {
+        "stars":5,
+        "comment":"gut genau"
+      },
+      {
+        "stars":5,
+        "comment":"gut"
+      }
+  ]
+  },

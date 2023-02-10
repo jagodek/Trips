@@ -1,0 +1,40 @@
+
+
+
+
+    <!-- <label for="pF">false</label>
+    <input id="pF" name="persType" value="false" type="radio">
+    <label for="pT">true</label>
+    <input id="pT" name="persType" value="true" type="radio"> -->
+<div class="main-container">
+  <div class="section">
+    <h2>Typ persystencji</h2>
+    <mat-radio-group [(ngModel)]="pType" (change)="updatePersistence($event.value)" >
+      <mat-radio-button name="persType" value="local">Local</mat-radio-button>
+      <mat-radio-button name="persType" value="none">None</mat-radio-button>
+      <mat-radio-button name="persType" value="session">Session</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="user-list section">
+    <h2>Lista użytkowników</h2>
+    <div *ngFor="let user of userList" class="list-element">
+      <div class="user-name">
+        <p>{{user.name}}</p>
+      </div>
+      <button mat-button type="button" (click)="ban(user)" [disabled]="user.banned">Zbanuj</button>
+      <button mat-button type="button" (click) ="unban(user)" [disabled]="!user.banned">Odbanuj</button>
+      <mat-form-field appearance="fill">
+        <mat-label>Rola</mat-label>
+        <mat-select (selectionChange)="updateRole($event.value,user)" [(value)]="user.role">
+          <mat-option value="client">Klient</mat-option>
+          <mat-option value="manager">Manager</mat-option>
+          <mat-option value="admin">Admin</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+
+
