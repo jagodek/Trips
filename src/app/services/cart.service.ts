@@ -30,7 +30,6 @@ export class CartService {
     })}
 
 
-  //ogarnąć koszyk użytkownika
   setUserTrips(uT:userTrip[]){
     this.userTrips.next(uT);
   }
