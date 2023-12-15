@@ -1,129 +1,173 @@
 <div class="maincontainer">
+  <mat-radio-group [(ngModel)]="pType" (change)="toggle($event.value)">
+    <mat-radio-button name="persType" value="add">Dodaj</mat-radio-button>
+    <mat-radio-button name="persType" value="edit">Edytuj</mat-radio-button>
+  </mat-radio-group>
 
+  <div *ngIf="pType === 'add'" class="form-box">
+    <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+      <p>
+        <mat-form-field apperance="fill" class="form-element">
+          <mat-label>Nazwa wycieczki</mat-label>
+          <input matInput id="name" formControlName="name" />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field apperance="fill" class="form-element">
+          <mat-label for="country">Kraj</mat-label>
+          <input matInput id="country" type="text" formControlName="country" />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field apperance="fill" class="form-element">
+          <mat-label for="dateBegin">Data wyjazdu</mat-label>
+          <mat-date-range-input
+            [rangePicker]="picker"
+            [dateFilter]="myDateFilter"
+          >
+            <input
+              matStartDate
+              id="dateBegin"
+              placeholder="mm.dd.rrrr"
+              formControlName="dateBegin"
+            />
 
-<mat-radio-group [(ngModel)]="pType" (change)="toggle($event.value)" >
-  <mat-radio-button name="persType" value="add">Dodaj</mat-radio-button>
-  <mat-radio-button name="persType" value="edit">Edytuj</mat-radio-button>
-</mat-radio-group>
-
-<div *ngIf="pType === 'add'" class="form-box">
-
-  <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
-  <p>
-    <mat-form-field apperance="fill" class="form-element">
-      <mat-label>Nazwa wycieczki</mat-label>
-      <input matInput id="name" formControlName="name">
-    </mat-form-field>
-  </p>
-  <p><mat-form-field apperance="fill" class="form-element">
-    <mat-label for="country">Kraj</mat-label>
-    <input matInput  id="country" type="text" formControlName="country">
-  </mat-form-field>
-  </p>
-  <p><mat-form-field apperance="fill" class="form-element">
-    <mat-label for="dateBegin">Data wyjazdu</mat-label>
-    <mat-date-range-input [rangePicker]="picker" [dateFilter]="myDateFilter">
-
-      <input matStartDate id="dateBegin"  placeholder="mm.dd.rrrr" formControlName="dateBegin">
-
-      <input matEndDate id="dateEnd" placeholder="mm.dd.rrrr" formControlName="dateEnd">
-
-    </mat-date-range-input>
+            <input
+              matEndDate
+              id="dateEnd"
+              placeholder="mm.dd.rrrr"
+              formControlName="dateEnd"
+            />
+          </mat-date-range-input>
           <mat-datepicker-toggle matIconSuffix [for]="picker">
-    </mat-datepicker-toggle>
-      <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field apperance="fill" class="form-element">
+          <mat-label for="price">Cena</mat-label>
+          <input matInput id="price" type="number" formControlName="price" />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field class="form-element">
+          <mat-label for="maxPeople">Maksymalna ilość uczestników</mat-label>
+          <input
+            matInput
+            id="maxPeople"
+            type="number"
+            formControlName="maxPeople"
+          />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field apperance="fill" class="form-element">
+          <mat-label for="description">Opis wycieczki</mat-label>
+          <input
+            matInput
+            id="description"
+            type="text"
+            formControlName="description"
+          />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field apperance="fill" class="form-element">
+          <mat-label for="photo">Zdjecie</mat-label>
+          <input matInput id="photo" type="url" formControlName="photo" />
+        </mat-form-field>
+      </p>
 
-  </mat-form-field>
-  </p>
-  <p><mat-form-field apperance="fill" class="form-element">
-    <mat-label for="price">Cena</mat-label>
-    <input matInput  id="price" type="number" formControlName="price">
-  </mat-form-field>
-  </p><p><mat-form-field class="form-element">
-    <mat-label for="maxPeople">Maksymalna ilość uczestników</mat-label>
-    <input matInput  id="maxPeople" type="number" formControlName="maxPeople">
-  </mat-form-field>
-  </p><p><mat-form-field apperance="fill" class="form-element">
-    <mat-label for="description">Opis wycieczki</mat-label>
-    <input matInput  id="description" type="text" formControlName="description">
-  </mat-form-field>
-  </p><p><mat-form-field apperance="fill" class="form-element">
-    <mat-label for="photo">Zdjecie</mat-label>
-    <input matInput  id="photo" type="url" formControlName="photo">
-  </mat-form-field>
-  </p>
+      <button mat-button type="submit" [disabled]="!addForm.valid">
+        Submit
+      </button>
+    </form>
+    <button mat-button (click)="mock()">Test</button>
+  </div>
 
-  <button mat-button type="submit" [disabled]="!addForm.valid">Submit</button>
+  <div *ngIf="pType === 'edit'" class="form-box edit">
+    <form [formGroup]="editForm" (ngSubmit)="onSubmitEdit()">
+      <p>
+        <mat-form-field apperance="fill" class="form-element">
+          <mat-label>Nazwa wycieczki</mat-label>
+          <input matInput id="name" formControlName="name" />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field apperance="fill" class="form-element">
+          <mat-label for="country">Kraj</mat-label>
+          <input matInput id="country" type="text" formControlName="country" />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field apperance="fill" class="form-element">
+          <mat-label for="dateBegin">Data wyjazdu</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input
+              matStartDate
+              id="dateBegin"
+              placeholder="mm.dd.rrrr"
+              formControlName="dateBegin"
+            />
 
-
-</form>
-<button mat-button (click)="mock()">Test</button>
-</div>
-
-
-<div *ngIf="pType === 'edit'" class="form-box edit">
-
-  <form [formGroup]="editForm" (ngSubmit)="onSubmitEdit()">
-  <p>
-    <mat-form-field apperance="fill" class="form-element">
-      <mat-label>Nazwa wycieczki</mat-label>
-      <input matInput id="name" formControlName="name">
-    </mat-form-field>
-  </p>
-  <p><mat-form-field apperance="fill" class="form-element">
-    <mat-label for="country">Kraj</mat-label>
-    <input matInput  id="country" type="text" formControlName="country">
-  </mat-form-field>
-  </p>
-  <p><mat-form-field apperance="fill" class="form-element">
-    <mat-label for="dateBegin">Data wyjazdu</mat-label>
-    <mat-date-range-input [rangePicker]="picker" >
-
-      <input matStartDate id="dateBegin"  placeholder="mm.dd.rrrr" formControlName="dateBegin">
-
-      <input matEndDate id="dateEnd" placeholder="mm.dd.rrrr" formControlName="dateEnd">
-
-    </mat-date-range-input>
+            <input
+              matEndDate
+              id="dateEnd"
+              placeholder="mm.dd.rrrr"
+              formControlName="dateEnd"
+            />
+          </mat-date-range-input>
           <mat-datepicker-toggle matIconSuffix [for]="picker">
-    </mat-datepicker-toggle>
-      <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field apperance="fill" class="form-element">
+          <mat-label for="price">Cena</mat-label>
+          <input matInput id="price" type="number" formControlName="price" />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field class="form-element">
+          <mat-label for="maxPeople">Maksymalna ilość uczestników</mat-label>
+          <input
+            matInput
+            id="maxPeople"
+            type="number"
+            formControlName="maxPeople"
+          />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field apperance="fill" class="form-element">
+          <mat-label for="description">Opis wycieczki</mat-label>
+          <input
+            matInput
+            id="description"
+            type="text"
+            formControlName="description"
+          />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field apperance="fill" class="form-element">
+          <mat-label for="photo">Zdjecie</mat-label>
+          <input matInput id="photo" type="url" formControlName="photo" />
+        </mat-form-field>
+      </p>
 
-  </mat-form-field>
-  </p>
-  <p><mat-form-field apperance="fill" class="form-element">
-    <mat-label for="price">Cena</mat-label>
-    <input matInput  id="price" type="number" formControlName="price">
-  </mat-form-field>
-  </p><p><mat-form-field class="form-element">
-    <mat-label for="maxPeople">Maksymalna ilość uczestników</mat-label>
-    <input matInput  id="maxPeople" type="number" formControlName="maxPeople">
-  </mat-form-field>
-  </p><p><mat-form-field apperance="fill" class="form-element">
-    <mat-label for="description">Opis wycieczki</mat-label>
-    <input matInput  id="description" type="text" formControlName="description">
-  </mat-form-field>
-  </p><p><mat-form-field apperance="fill" class="form-element">
-    <mat-label for="photo">Zdjecie</mat-label>
-    <input matInput  id="photo" type="url" formControlName="photo">
-  </mat-form-field>
-  </p>
-
-  <button mat-button type="submit" [disabled]="!editForm.valid">Submit</button>
-
-
-</form>
-<div class="list">
-<div *ngFor="let trip of trips">
-  <button mat-button  type="button" (click)="choose(trip)">{{trip.name}}</button>
-
-</div>
-
-</div>
-
-
-
-</div>
-
-
-
+      <button mat-button type="submit" [disabled]="!editForm.valid">
+        Submit
+      </button>
+    </form>
+    <div class="list">
+      <div *ngFor="let trip of trips">
+        <button mat-button type="button" (click)="choose(trip)">
+          {{ trip.name }}
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

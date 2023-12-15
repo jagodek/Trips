@@ -17,10 +17,10 @@ export class AddTripComponent implements OnInit{
   editForm!:FormGroup;
   pType = "add";
   myDateFilter(date: Date): boolean{
-    date = new Date(date);
-    var d = new Date(date.getFullYear(), date.getMonth(),date.getDate());
-    var today  = new Date();
-    var curr = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    date = new Date(date);  //niepotrzebne?
+    let d = new Date(date.getFullYear(), date.getMonth(),date.getDate());
+    let today  = new Date();
+    let curr = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     return curr.getTime() < d.getTime();
   }
 
@@ -89,6 +89,7 @@ export class AddTripComponent implements OnInit{
       // user_stars:1
 
     }
+    this.addForm.setValue({...trip});
     this.tripService.addTrip(trip);
   }
 
