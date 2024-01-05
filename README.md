@@ -2,6 +2,8 @@
 _AGH University of Science and Technology, Cracow 2022/2023_
 
  Angular project for web application university course by **Michał Godek**  
+
+ # Check it out: [https://jagodek.github.io/Trips/](https://jagodek.github.io/Trips/)
    
 
   
