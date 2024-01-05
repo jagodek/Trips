@@ -6,7 +6,7 @@ import { filter } from 'rxjs';
 
 @Pipe({
   name: 'FilterPipe',
-  pure: false,
+  pure: false, // if changes dependend on something else than arguments
 })
 export class FilterPipe implements PipeTransform {
   transform(allTrips: TripLocal[], filterSet: FilterSet): TripLocal[] {
